@@ -74,7 +74,7 @@ export default {
         const headers = {
             'contentType':'multipart/form-data'
         }
-        //creation d'une istance pour pouvoir organiser les valeur rentrées dans les v-model dans un format acceptés par le server ;
+        //creation d'une istance pour pouvoir organiser les valeur rentrées dans les v-model dans un format acceptés par le server et les passer dans la request avec la variable data;
         let data = new FormData();
         data.append('name', this.product.name)
         data.append('description', this.product.description)
@@ -85,7 +85,8 @@ export default {
 
         axios
         .post(`http://127.0.0.1:8000/api/v1/products/${productId}?_method=PUT`,data , {headers})
-        .then((response) => console.log(response))
+        .then((response) => console.log(response));
+        // this.$router.push("/products");
     },
     //pour inserer correctement les images ;
     fileImg(event){

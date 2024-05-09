@@ -20,7 +20,9 @@
                 </div> 
                 <div class="btns">
                     <button @click="deleteProduct(product.id)">Supprimer</button>
-                    <router-link :to="{path: '/products/update/'+product.id}"><button>Modifier</button></router-link>
+                    <router-link :to="{path: '/products/update/'+ product.id}"><button>Modifier</button></router-link>
+                    <router-link :to="{name:'ShowProduct' , params: { id : product.id }}"><button @click="getProductData(product.id)">Afficher produit</button></router-link>
+                    <!-- <router-link :to="{ path:'/products/'+ product.id }"><button>Visualiser</button></router-link> -->
                 </div>
             </tbody>
         </div>
@@ -56,6 +58,14 @@ methods :{
         console.error("Une erreur s'est produite");
     }) 
     },
+
+    getProductData(productId){
+            axios.
+            get(`http://127.0.0.1:8000/api/v1/products/${productId}`)
+            .then((response)=>{
+                console.log(response);
+            })
+        },
   
     deleteProduct(productId){
         axios
