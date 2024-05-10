@@ -5,11 +5,13 @@
         <div></div>
         <!-- <div><input @keydown="getProductFromCategory" type="text" placeholder="search"></div> -->
     </div><br>
-   
-    <div class="container"> 
-        <div class="listing-categories" v-for="categorie in categories" :key="categorie.id">
-            <div><input type="checkbox" class="categorie">{{ categorie.name }}</input></div>
+    <div class="listing-categories">
+        <div class="categorie" v-for="categorie in categories" :key="categorie.id">
+            <input type="checkbox" @change="getProductByCategorie">{{ categorie.name }}</input>
         </div>
+    </div>
+    <div class="container"> 
+        
         <tbody class="listing-products" v-for="product in products" :key="product.id">
             <div class="product">
                 <p>id_produit: {{ product.id }} </p>
@@ -146,9 +148,12 @@ methods :{
 }
 .listing-categories{
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    margin-bottom: 25px;
 }
-/* .categorie{
+.categorie{
 
-} */
+}
 </style>

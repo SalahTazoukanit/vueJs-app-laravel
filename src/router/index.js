@@ -5,9 +5,11 @@ import StoreProduct from '../components/views/products/StoreProduct.vue';
 import UpdateProduct from '../components/views/products/UpdateProduct.vue';
 import ShowProduct from '../components/views/products/ShowProduct.vue';
 
-
+import Register from '@/components/views/auths/Register.vue';
+import Login from '@/components/views/auths/Login.vue';
 
 import { createRouter, createWebHistory } from 'vue-router';
+
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
     routes: [
@@ -35,7 +37,17 @@ const router = createRouter({
         path:'/products/:id',
         component: ShowProduct,
         name:"ShowProduct",
-    }
+    },
+    {
+        path:'/register',
+        component: Register,
+        name:"Register",
+    },
+    {
+        path:'/login',
+        component: Login,
+        name:"Login",
+    },
   ],
 })
 

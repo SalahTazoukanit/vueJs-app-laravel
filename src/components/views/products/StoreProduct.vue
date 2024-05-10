@@ -3,7 +3,7 @@
     <h1 style="text-align: center;">Creér un produit</h1>
     <div>
         <section>
-            <form @submit.prevent="createProduct">
+            <form @submit.prevent="createProduct" enctype="multipart/form-data">
                 <!-- <div>
                     <label for="productId">product_id:</label>
                     <input type="text" id="productId" v-model="product.id">

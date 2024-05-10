@@ -9,13 +9,11 @@
             <p v-if="product.stock">{{ product.stock }}</p>
             <p v-if="product.image">{{ product.image }}</p>
         </div>
-        
-       
     </div>
 </template>
 
 <script>
- import axios from 'axios';
+import axios from 'axios';
  
 export default {
     data() {

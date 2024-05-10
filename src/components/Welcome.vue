@@ -1,6 +1,11 @@
 <template>
+    <nav style="display: flex;">
+        <router-link to="/register">Register</router-link>
+        <router-link to="/login">Login</router-link>
+    </nav>
     <div>
     <h1>{{ msg }}</h1>
+    
     </div>
 </template>
 
