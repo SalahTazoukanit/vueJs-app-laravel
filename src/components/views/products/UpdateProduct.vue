@@ -42,12 +42,12 @@ export default {
     data(){
         return {
             product:{
-                productId: null,
-                name: this.$route.params.name,
-                description: this.$route.params.description,
-                stock: this.$route.params.stock,
-                price: this.$route.params.price,
-                image: this.$route.params.image,
+                // productId: null,
+                // name: this.$route.params.name,
+                // description: this.$route.params.description,
+                // stock: this.$route.params.stock,
+                // price: this.$route.params.price,
+                // image: this.$route.params.image,
                 // categorie: this.$route.params.categorie,
             }
         } 
@@ -61,7 +61,11 @@ export default {
     //recuperer les données du produit pour les afficher dans les champs a rentrer/modifier ;
     getProductData(productId){
         axios
-        .get(`http://127.0.0.1:8000/api/v1/products/${productId}`)
+        .get(`http://127.0.0.1:8000/api/v1/products/${productId}`, {
+            headers:{
+                'Authorization' : 'Bearer ' + localStorage.getItem('token'),
+            }
+        })
         .then((response)=>{
             this.product = response.data;
             console.log(response.data);
@@ -71,7 +75,8 @@ export default {
     updateProduct(){
         const productId = this.$route.params.id ;
 
-        const headers = {
+        const header = {
+
             'contentType':'multipart/form-data'
         }
         //creation d'une istance pour pouvoir organiser les valeur rentrées dans les v-model dans un format acceptés par le server et les passer dans la request avec la variable data;
@@ -84,15 +89,23 @@ export default {
         // data.append('image', this.product.categorie)
 
         axios
-        .post(`http://127.0.0.1:8000/api/v1/products/${productId}?_method=PUT`,data , {headers})
+        .post(`http://127.0.0.1:8000/api/v1/products/${productId}?_method=PUT`, data  , {
+        headers:{
+            'Authorization' : 'Bearer ' + localStorage.getItem('token'),
+        }
+        }, header)
         .then((response) => console.log(response));
-        // this.$router.push("/products");
+        this.$router.push("/products");
     },
     //pour inserer correctement les images ;
     fileImg(event){
         this.product.image = event.target.files[0];
-    }
-     
+    },
+    getImageUrl(image){
+        if (image) {
+            return 'http://128.0.0.1:8000' + image ;
+        }
+    } 
  }
    
   }

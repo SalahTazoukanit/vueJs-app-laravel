@@ -7,14 +7,20 @@
             <p v-if="product.description">{{ product.description }}</p>
             <p v-if="product.price">{{ product.price }}</p>
             <p v-if="product.stock">{{ product.stock }}</p>
-            <p v-if="product.image">{{ product.image }}</p>
+            <img v-if="product.image" :src="getImageUrl(product.image)"></img>
         </div>
     </div>
 </template>
 
 <script>
 import axios from 'axios';
- 
+
+// constante token à rajouter dans les requests 
+const headers = {
+'Authorization': 'Bearer ' + localStorage.getItem('token'),
+'Content-Type': 'application/json'
+};
+
 export default {
     data() {
         return {
@@ -26,7 +32,7 @@ export default {
     methods : {
         getProductData(productId){
             axios.
-            get(`http://127.0.0.1:8000/api/v1/products/${productId}`)
+            get(`http://127.0.0.1:8000/api/v1/products/${productId}`, { headers })
             .then((response)=>{
                 console.log(response.data);
                 this.product = response.data;
@@ -34,7 +40,15 @@ export default {
             .catch((error)=>{
                 console.error("Une erreur s'est produite");
             })
+        },
+        getImageUrl(image){
+        if (image) {
+            return 'http://127.0.0.1:8000/' + image ;
         }
+    },
+    fileImg(event){
+        this.product.image = event.target.files[0];
+    },
     },
     mounted() {
         this.getProductData(this.$route.params.id);

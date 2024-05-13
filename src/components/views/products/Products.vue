@@ -1,7 +1,7 @@
 <template> 
     <h1>Listing Produits</h1>
     <div class="first-head">
-        <div><router-link to="products/store">Store</router-link></div>
+        <div><router-link to="products/store"><button class="btn">store</button></router-link></div>
         <div></div>
         <!-- <div><input @keydown="getProductFromCategory" type="text" placeholder="search"></div> -->
     </div><br>
@@ -22,13 +22,12 @@
                 <div v-for="categories in product.categorie">
                     Categorie: {{ categories }}
                 </div>
-                <img ref="file" :src="product.image" v-bind:src="image_url" alt="" />
-                
+                <img :src="getImageUrl(product.image)" alt="" />  
             </div> 
             <div class="btns">
                 <button @click="deleteProduct(product.id)">Supprimer</button>
-                <router-link :to="{path: '/products/update/'+ product.id}"><button>Modifier</button></router-link>
-                <router-link :to="{name:'ShowProduct' , params: { id : product.id }}"><button @click="getProductData(product.id)">Afficher produit</button></router-link>
+                <router-link style="text-decoration: none;" :to="{path: '/products/update/'+ product.id}"><button>Modifier</button></router-link>
+                <router-link style="text-decoration: none;" :to="{name:'ShowProduct' , params: { id : product.id }}"><button @click="getProductData(product.id)">Afficher produit</button></router-link>
                 <!-- <router-link :to="{ path:'/products/'+ product.id }"><button>Visualiser</button></router-link> -->
             </div>
         </tbody>
@@ -49,19 +48,27 @@ export default {
             ],
             categories:[
 
-            ]
+            ],
+            authenticated : false,
         } 
     },
 
     mounted() {
     this.getProducts() ;
     this.getCategories();
+    // this.getImageUrl();
     },
 
 methods :{
+
     getProducts(){
     axios
-    .get("http://127.0.0.1:8000/api/v1/products")
+    .get("http://127.0.0.1:8000/api/v1/products", {
+        headers:{
+            'Authorization' : 'Bearer ' + localStorage.getItem('token'),
+            "Content-Type": 'application/json',
+        }
+    })
     .then((response)=>{
         console.log(response);
         this.products = response.data ;
@@ -72,8 +79,13 @@ methods :{
     },
 
     getProductData(productId){
-            axios.
-            get(`http://127.0.0.1:8000/api/v1/products/${productId}`)
+        axios.
+        get(`http://127.0.0.1:8000/api/v1/products/${productId}` ,{
+            headers:{
+                'Authorization' : 'Bearer ' + localStorage.getItem('token'),
+                "Content-Type": 'application/json',
+        }
+    })
             .then((response)=>{
                 console.log(response);
             })
@@ -81,7 +93,12 @@ methods :{
 
     deleteProduct(productId){
         axios
-        .delete(`http://127.0.0.1:8000/api/v1/products/${productId}`)
+        .delete(`http://127.0.0.1:8000/api/v1/products/${productId}`, {
+        headers:{
+            'Authorization' : 'Bearer ' + localStorage.getItem('token'),
+            "Content-Type": 'application/json',
+        }
+    })
         .then((response)=>{ 
             alert("Vous avez supprimé l'article") ;
             this.getProducts();
@@ -92,16 +109,26 @@ methods :{
     fileImg(event){
         this.product.image = event.target.files[0];
     },
+    getImageUrl(image){
+        if (image) {
+            return 'http://127.0.0.1:8000/' + image ;
+        }
+    },
 
     getCategories(){
         axios
-        .get(`http://127.0.0.1:8000/api/v1/categories`)
+        .get(`http://127.0.0.1:8000/api/v1/categories`, {
+        headers:{
+            'Authorization' : 'Bearer ' + localStorage.getItem('token'),
+            "Content-Type": 'application/json',
+        }
+    })
         .then((response)=>{
             console.log(response);
             this.categories = response.data ;
         });
-    }
-    // getProductFromCategory(){
+    },
+    // getProductByCategorie(){
     //     console.log('ok');
     //     axios.
     //     get()
@@ -137,8 +164,8 @@ methods :{
 .product{
     border: solid;
     text-align: center;
-    width: 300px;
-    height: 250px;
+    width: 320px;
+    height: 400px;
     border-radius: 10px;
 }
 .btns{
@@ -152,6 +179,21 @@ methods :{
     justify-content: space-evenly;
     align-items: center;
     margin-bottom: 25px;
+}
+.btn{
+    width: 200px;
+    height: 30px;
+}
+button{
+    border: none;
+    color:white;
+    background-color: rgb(219, 153, 22);
+    border-radius: 5px;
+}
+img{
+    width:300px ;
+    height: 200px;
+    border-radius: 10px;
 }
 .categorie{
 

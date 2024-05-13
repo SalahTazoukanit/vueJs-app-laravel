@@ -20,9 +20,10 @@
                     <label for="stock">Stock: </label>
                     <input type="text" id="stock" v-model="product.stock">
                 </div>
-                <!-- <div>
-                    <label for="name">Categories: </label>
-                    <input type="text" id="name" v-model="product.categorie">
+                <!-- <div class="listing-categories">
+                    <div class="categorie" v-for="categorie in categories" :key="categorie.id">
+                        <input type="checkbox">{{ categorie.name }}</input>
+                    </div>
                 </div> -->
                 <div>
                     <label for="description">Description: </label>
@@ -36,7 +37,8 @@
 </template>
 
 <script>
-import axios from 'axios'
+import router from '@/router';
+import axios from 'axios';
 
 export default {
   data() {
@@ -49,7 +51,10 @@ export default {
         stock: 0,
         // categories: [],
         image:'',
-      }
+      },
+    //   categories:[
+
+    //     ],
     }
   },
   methods: {
@@ -60,19 +65,42 @@ export default {
         data.append('description', this.product.description)
         data.append('price', this.product.price)
         data.append('stock', this.product.stock)
+        // data.append('categories',this.product.categorie)
         data.append('image', this.product.image)
 		
         axios
-        .post('http://127.0.0.1:8000/api/v1/products', data)
+        .post('http://127.0.0.1:8000/api/v1/products', data, {
+            headers:{
+                'Authorization' : 'Bearer ' + localStorage.getItem('token'),
+
+            }
+        })
         .then((response) => console.log(response))
-        
-        alert("le produit a été bien créer !") ;
+        this.$router.push("/products");
 
 	},
+    getImageUrl(image){
+        if (image) {
+            return 'http://127.0.0.1:8000/' + image ;
+        }
+    },
     fileImg(event){
         this.product.image = event.target.files[0];
+    },
+    getCategories(){
+        axios
+        .get(`http://127.0.0.1:8000/api/v1/categories`, {
+        headers:{
+            'Authorization' : 'Bearer ' + localStorage.getItem('token'),
+            "Content-Type": 'application/json',
+        }
+    })
+        .then((response)=>{
+            console.log(response);
+            this.categories = response.data ;
+        });
+    },
     }
-  }
 }
 </script>
 
