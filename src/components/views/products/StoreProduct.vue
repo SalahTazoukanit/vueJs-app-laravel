@@ -4,10 +4,6 @@
     <div>
         <section>
             <form @submit.prevent="createProduct" enctype="multipart/form-data">
-                <!-- <div>
-                    <label for="productId">product_id:</label>
-                    <input type="text" id="productId" v-model="product.id">
-                </div> -->
                 <div>
                     <label for="name">Nom produit: </label>
                     <input type="text" id="name" v-model="product.name">
@@ -22,7 +18,7 @@
                 </div>
                 <div class="listing-categories">
                     <div class="categorie" v-for="categorie in categories" :key="categorie.id">
-                        <input type="checkbox">{{ categorie.name }}</input>
+                        <input type="checkbox" v-model="categories">{{ categorie.name }}
                     </div>
                 </div>
                 <div>
@@ -37,25 +33,26 @@
 </template>
 
 <script>
-// import router from '@/router';
 import axios from 'axios';
 
 export default {
   data() {
     return {
       product : {
-        // id: '',
         name: '',
         description: '',
         price: 0,
         stock: 0,
-        // categories: [],
+        categories: [],
         image:'',
       },
       categories:[
 
         ],
     }
+  },
+  mounted() {
+    this.getCategories();
   },
   methods: {
 
@@ -65,7 +62,7 @@ export default {
         data.append('description', this.product.description)
         data.append('price', this.product.price)
         data.append('stock', this.product.stock)
-        data.append('categories',this.product.categorie)
+        data.append('categories',this.product.categories)
         data.append('image', this.product.image)
 		
         axios

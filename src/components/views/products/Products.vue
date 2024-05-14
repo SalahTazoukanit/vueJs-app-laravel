@@ -32,7 +32,7 @@
             <div class="btns">
                 <button @click="deleteProduct(product.id)">Supprimer</button>
                 <router-link style="text-decoration: none;" :to="{path: '/products/update/'+ product.id}"><button>Modifier</button></router-link>
-                <router-link style="text-decoration: none;" :to="{name:'ShowProduct' , params: { id : product.id }}"><button @click="getProductData(product.id)">Afficher produit</button></router-link>
+                <router-link style="text-decoration: none;" :to="{name:'ShowProduct' , params: { id : product.id }}"><button>Afficher produit</button></router-link>
                 <!-- <router-link :to="{ path:'/products/'+ product.id }"><button>Visualiser</button></router-link> -->
             </div>
         </tbody>
