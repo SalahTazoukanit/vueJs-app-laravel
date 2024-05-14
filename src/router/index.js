@@ -6,7 +6,8 @@ import UpdateProduct from '../components/views/products/UpdateProduct.vue';
 import ShowProduct from '../components/views/products/ShowProduct.vue';
 //categories routers
 import Categories from '../components/views/categories/Categories.vue';
-import UpdateCategories from '../components/views/categories/Categories.vue';
+import UpdateCategorie from '../components/views/categories/UpdateCategorie.vue';
+import StoreCategorie from '../components/views/categories/StoreCategorie.vue';
 //auths routers
 import Register from '@/components/views/auths/Register.vue';
 import Login from '@/components/views/auths/Login.vue';
@@ -58,8 +59,14 @@ const router = createRouter({
   },
   {
     path:'/categories/update/:id',
-    component: UpdateCategories,
-    name:"UpdateCategories",
+    component: UpdateCategorie,
+    name:"UpdateCategorie",
+    meta: {requiresAuth: true } , 
+  },
+  {
+    path:'/categories/store',
+    component: StoreCategorie,
+    name:"StoreCategorie",
     meta: {requiresAuth: true } , 
   },
   //authentifications route

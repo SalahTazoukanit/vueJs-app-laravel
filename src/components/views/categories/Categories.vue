@@ -3,6 +3,7 @@
         <router-link to="/products">Produits</router-link><br>
         <router-link to="/categories">Categories</router-link><br>
     </header>
+    <div style="display: flex; justify-content: center;"><router-link to="categories/store"><button id="store">Créer categorie</button></router-link></div>
     <div>
         <h1>Listing Categories</h1>
         <div class="listing-categories">
@@ -11,7 +12,7 @@
                 <p>{{ categorie.name }}</p>
                 <p>{{ categorie.description }}</p>
                 <div class="btns">
-                    <button>Modifier</button>
+                    <router-link style="text-decoration: none;" :to="{path: '/categories/update/'+ categorie.id}"><button>Modifier</button></router-link>
                     <button @click="deleteCategorie(categorie.id)">Supprimer</button>
                 </div>
             </div>
@@ -50,7 +51,7 @@ export default {
                 this.categories = response.data ;
             })
         },
-        
+
         deleteCategorie(categorieId){
             axios
             .delete(`http://127.0.0.1:8000/api/v1/categories/${categorieId}`, {
@@ -80,6 +81,9 @@ export default {
     background-color: black;
     color: white;
     padding: 15px;
+}
+#store{
+    width: 200px;
 }
 .btns{
     display: flex;

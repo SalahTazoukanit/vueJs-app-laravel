@@ -42,13 +42,7 @@ export default {
     data(){
         return {
             product:{
-                // productId: null,
-                // name: this.$route.params.name,
-                // description: this.$route.params.description,
-                // stock: this.$route.params.stock,
-                // price: this.$route.params.price,
-                // image: this.$route.params.image,
-                // categorie: this.$route.params.categorie,
+                
             }
         } 
     },
@@ -60,6 +54,7 @@ export default {
  methods: {
     //recuperer les données du produit pour les afficher dans les champs a rentrer/modifier ;
     getProductData(productId){
+        
         axios
         .get(`http://127.0.0.1:8000/api/v1/products/${productId}`, {
             headers:{
