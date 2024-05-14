@@ -2,6 +2,7 @@
     <header>
         <router-link to="/products">Produits</router-link><br>
         <router-link to="/categories">Categories</router-link><br>
+        <router-link to="/profile">Mon Profile</router-link><br>
     </header>
     <div style="display: flex; justify-content: center;"><router-link to="categories/store"><button id="store">Créer categorie</button></router-link></div>
     <div>

@@ -19,16 +19,17 @@
                     <label for="name">Stock: </label>
                     <input type="text" id="stock" v-model="product.stock">
                 </div>
-                <!-- <div>
-                    <label for="name">Categories: </label>
-                    <input type="text" id="name" v-model="product.categorie">
-                </div> -->
+                <div class="listing-categories">
+                    <div class="categorie" v-for="categorie in categories" :key="categorie.id">
+                        <input type="checkbox" :value="categorie.id" v-model="selectedCategories">{{ categorie.name }}
+                    </div>
+                </div>
                 <div>
                     <label for="description">Description: </label>
                     <textarea id="description" rows="6" cols="22" v-model="product.description"></textarea>
                 </div>
                 <div><input type="file" ref="file" @change="fileImg" required></div>
-                <button>Modifier le produit</button>
+                <button type="submit">Modifier le produit</button>
             </form>
         </section>
     </div>
@@ -41,14 +42,15 @@ export default {
     //creation d'un objet product qui a comme parametres les valeurs recuperées avec this.$route.params dans l'url ;
     data(){
         return {
-            product:{
-                
-            }
+            product:{},
+            categories : [],
+            selectedCategories : [],
         } 
     },
     //fonction pour recuperer l'id du produit et aprés l'assigner a la fonction suivante ;
     mounted(){
         this.getProductData(this.$route.params.id);
+        this.getCategories();
     },
 
  methods: {
@@ -70,10 +72,6 @@ export default {
     updateProduct(){
         const productId = this.$route.params.id ;
 
-        const header = {
-
-            'contentType':'multipart/form-data'
-        }
         //creation d'une istance pour pouvoir organiser les valeur rentrées dans les v-model dans un format acceptés par le server et les passer dans la request avec la variable data;
         let data = new FormData();
         data.append('name', this.product.name)
@@ -81,16 +79,31 @@ export default {
         data.append('price', this.product.price)
         data.append('stock', this.product.stock)
         data.append('image', this.product.image)
-        // data.append('image', this.product.categorie)
+        data.append('categories',JSON.stringify(this.selectedCategories))
 
         axios
         .post(`http://127.0.0.1:8000/api/v1/products/${productId}?_method=PUT`, data  , {
         headers:{
             'Authorization' : 'Bearer ' + localStorage.getItem('token'),
+            'contentType':'multipart/form-data'
         }
-        }, header)
+        })
         .then((response) => console.log(response));
         this.$router.push("/products");
+    },
+    getCategories(){
+        axios
+        .get(`http://127.0.0.1:8000/api/v1/categories`, {
+        headers:{
+            'Authorization' : 'Bearer ' + localStorage.getItem('token'),
+            "Content-Type": 'application/json',
+        }
+        })
+            .then((response)=>{
+                console.log(response);
+                this.categories = response.data ;
+            });
+        },
     },
     //pour inserer correctement les images ;
     fileImg(event){
@@ -103,7 +116,7 @@ export default {
     } 
  }
    
-  }
+
 
 </script>
 

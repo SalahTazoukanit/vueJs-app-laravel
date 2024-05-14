@@ -2,6 +2,7 @@
     <header>
         <router-link to="/products">Produits</router-link><br>
         <router-link to="/categories">Categories</router-link><br>
+        <router-link to="/profile">Mon Profile</router-link><br>
     </header>
     <div><button style="float: right;" @click="logout">Logout</button></div>
     <h1>Listing Produits</h1>
@@ -19,15 +20,17 @@
         
         <tbody class="listing-products" v-for="product in products" :key="product.id">
             <div class="product">
+                <img :src="getImageUrl(product.image)" alt="" /> 
                 <p>id_produit: {{ product.id }} </p>
                 <p>Nom: {{ product.name }} </p>
                 <p>Description: {{ product.description }} </p>
                 <p>Price: {{ product.price }} euros </p>
                 <p>Stock: {{ product.stock }} produits restants </p>
+                Categorie:
                 <div v-for="categories in product.categorie">
-                    Categorie: {{ categories }}
+                     {{ categories }}
                 </div>
-                <img :src="getImageUrl(product.image)" alt="" />  
+                 
             </div> 
             <div class="btns">
                 <button @click="deleteProduct(product.id)">Supprimer</button>
@@ -169,13 +172,15 @@ methods :{
     display: flex;
     flex-direction: column;
     gap: 1em;
+    overflow: hidden;
 }
 .product{
     border: solid;
     text-align: center;
     width: 320px;
-    height: 400px;
+    height: 450px;
     border-radius: 10px;
+    padding: 5px;
 }
 .btns{
     display: flex;
@@ -203,6 +208,12 @@ img{
     width:300px ;
     height: 200px;
     border-radius: 10px;
+}
+.product p{
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
 }
 .categorie{
 

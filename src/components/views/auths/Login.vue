@@ -48,7 +48,9 @@ export default {
             .then((response)=>{
                 console.log(response);
                 const token = response.data.token ;
+                const id = response.data.user.id ;
                 localStorage.setItem('token', token);
+                localStorage.setItem('userId', id);
                 this.$router.push('/products' );
             }).catch(error => console.log(error)); 
         }

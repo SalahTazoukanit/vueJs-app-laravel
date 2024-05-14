@@ -29,6 +29,9 @@ export default {
             }
         }
     },
+    mounted() {
+        this.getProductData(this.$route.params.id);
+    },
     methods : {
         getProductData(productId){
             axios.
@@ -49,10 +52,7 @@ export default {
     fileImg(event){
         this.product.image = event.target.files[0];
     },
-    },
-    mounted() {
-        this.getProductData(this.$route.params.id);
-    }
+},
 
 }
 </script>

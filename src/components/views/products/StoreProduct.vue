@@ -18,7 +18,7 @@
                 </div>
                 <div class="listing-categories">
                     <div class="categorie" v-for="categorie in categories" :key="categorie.id">
-                        <input type="checkbox" v-model="categories">{{ categorie.name }}
+                        <input type="checkbox" :value="categorie.id" v-model="selectedCategories">{{ categorie.name }}
                     </div>
                 </div>
                 <div>
@@ -46,9 +46,8 @@ export default {
         categories: [],
         image:'',
       },
-      categories:[
-
-        ],
+      selectedCategories :[],
+      categories:[],
     }
   },
   mounted() {
@@ -62,14 +61,13 @@ export default {
         data.append('description', this.product.description)
         data.append('price', this.product.price)
         data.append('stock', this.product.stock)
-        data.append('categories',this.product.categories)
+        data.append('categories',JSON.stringify(this.selectedCategories))
         data.append('image', this.product.image)
 		
         axios
         .post('http://127.0.0.1:8000/api/v1/products', data, {
             headers:{
                 'Authorization' : 'Bearer ' + localStorage.getItem('token'),
-
             }
         })
         .then((response) => console.log(response))

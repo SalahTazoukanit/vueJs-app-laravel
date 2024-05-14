@@ -8,6 +8,8 @@ import ShowProduct from '../components/views/products/ShowProduct.vue';
 import Categories from '../components/views/categories/Categories.vue';
 import UpdateCategorie from '../components/views/categories/UpdateCategorie.vue';
 import StoreCategorie from '../components/views/categories/StoreCategorie.vue';
+//user routers
+import Profile from '../components/views/user/Profile.vue';
 //auths routers
 import Register from '@/components/views/auths/Register.vue';
 import Login from '@/components/views/auths/Login.vue';
@@ -69,7 +71,20 @@ const router = createRouter({
     name:"StoreCategorie",
     meta: {requiresAuth: true } , 
   },
-  //authentifications route
+  //user routes
+  {
+    path:'/profile',
+    component: Profile,
+    name:"Profile",
+    meta: {requiresAuth: true } , 
+  },
+  // {
+  //   path:'/profile/update',
+  //   component: ProfileUpdate,
+  //   name:"ProfileUpdate",
+  //   meta: {requiresAuth: true } , 
+  // },
+  //authentifications routes
   {
       path:'/register',
       component: Register,
