@@ -1,10 +1,13 @@
 import Welcome from '../components/Welcome.vue';
-
+//products routers
 import Products from '../components/views/products/Products.vue';
 import StoreProduct from '../components/views/products/StoreProduct.vue';
 import UpdateProduct from '../components/views/products/UpdateProduct.vue';
 import ShowProduct from '../components/views/products/ShowProduct.vue';
-
+//categories routers
+import Categories from '../components/views/categories/Categories.vue';
+import UpdateCategories from '../components/views/categories/Categories.vue';
+//auths routers
 import Register from '@/components/views/auths/Register.vue';
 import Login from '@/components/views/auths/Login.vue';
 
@@ -21,6 +24,7 @@ const router = createRouter({
       component: Welcome,
       name:"welcome",
     },
+    //products routes
     {
       path:'/products',
       component: Products,
@@ -45,16 +49,30 @@ const router = createRouter({
         name:"ShowProduct",
         meta: {requiresAuth: true } , 
     },
-    {
-        path:'/register',
-        component: Register,
-        name:"Register",
-    },
-    {
-        path:'/login',
-        component: Login,
-        name:"Login",
-    },
+    //categories routes 
+  {
+    path:'/categories',
+    component: Categories,
+    name:"Categories",
+    meta: {requiresAuth: true } , 
+  },
+  {
+    path:'/categories/update/:id',
+    component: UpdateCategories,
+    name:"UpdateCategories",
+    meta: {requiresAuth: true } , 
+  },
+  //authentifications route
+  {
+      path:'/register',
+      component: Register,
+      name:"Register",
+  },
+  {
+      path:'/login',
+      component: Login,
+      name:"Login",
+  },
   ],
 })
 

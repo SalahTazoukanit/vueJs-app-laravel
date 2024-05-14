@@ -1,4 +1,9 @@
 <template> 
+    <header>
+        <router-link to="/products">Produits</router-link><br>
+        <router-link to="/categories">Categories</router-link><br>
+    </header>
+    <div><button style="float: right;" @click="logout">Logout</button></div>
     <h1>Listing Produits</h1>
     <div class="first-head">
         <div><router-link to="products/store"><button class="btn">store</button></router-link></div>
@@ -61,6 +66,11 @@ export default {
 
 methods :{
 
+    logout(){
+        localStorage.removeItem('token');
+        this.$router.push('/login');
+    },
+
     getProducts(){
     axios
     .get("http://127.0.0.1:8000/api/v1/products", {
@@ -94,21 +104,20 @@ methods :{
     deleteProduct(productId){
         axios
         .delete(`http://127.0.0.1:8000/api/v1/products/${productId}`, {
-        headers:{
-            'Authorization' : 'Bearer ' + localStorage.getItem('token'),
-            "Content-Type": 'application/json',
-        }
-    })
+            headers:{
+                'Authorization' : 'Bearer ' + localStorage.getItem('token'),
+                "Content-Type": 'application/json',
+            }
+        })
         .then((response)=>{ 
-            alert("Vous avez supprimé l'article") ;
             this.getProducts();
-
         });
     },
 
     fileImg(event){
         this.product.image = event.target.files[0];
     },
+
     getImageUrl(image){
         if (image) {
             return 'http://127.0.0.1:8000/' + image ;

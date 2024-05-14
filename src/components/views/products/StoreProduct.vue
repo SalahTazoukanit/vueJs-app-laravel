@@ -20,11 +20,11 @@
                     <label for="stock">Stock: </label>
                     <input type="text" id="stock" v-model="product.stock">
                 </div>
-                <!-- <div class="listing-categories">
+                <div class="listing-categories">
                     <div class="categorie" v-for="categorie in categories" :key="categorie.id">
                         <input type="checkbox">{{ categorie.name }}</input>
                     </div>
-                </div> -->
+                </div>
                 <div>
                     <label for="description">Description: </label>
                     <textarea id="description" rows="6" cols="22" v-model="product.description"></textarea>
@@ -37,7 +37,7 @@
 </template>
 
 <script>
-import router from '@/router';
+// import router from '@/router';
 import axios from 'axios';
 
 export default {
@@ -52,9 +52,9 @@ export default {
         // categories: [],
         image:'',
       },
-    //   categories:[
+      categories:[
 
-    //     ],
+        ],
     }
   },
   methods: {
@@ -65,7 +65,7 @@ export default {
         data.append('description', this.product.description)
         data.append('price', this.product.price)
         data.append('stock', this.product.stock)
-        // data.append('categories',this.product.categorie)
+        data.append('categories',this.product.categorie)
         data.append('image', this.product.image)
 		
         axios
