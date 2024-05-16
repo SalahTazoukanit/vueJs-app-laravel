@@ -56,6 +56,8 @@ export default {
   methods: {
 
     createProduct() {
+        console.log(this.product.image);
+        
         let data = new FormData();
         data.append('name', this.product.name)
         data.append('description', this.product.description)
@@ -71,6 +73,8 @@ export default {
             }
         })
         .then((response) => console.log(response))
+        console.log(this.product.image);
+
         this.$router.push("/products");
 
 	},

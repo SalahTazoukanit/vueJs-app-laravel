@@ -28,7 +28,7 @@
                     <label for="description">Description: </label>
                     <textarea id="description" rows="6" cols="22" v-model="product.description"></textarea>
                 </div>
-                <div><input type="file" ref="file" @change="fileImg" required></div>
+                <div><input accept="image/jpeg, image/png, image/jpg" type="file" ref="file" @change="fileImg" required></div>
                 <button type="submit">Modifier le produit</button>
             </form>
         </section>
@@ -42,9 +42,17 @@ export default {
     //creation d'un objet product qui a comme parametres les valeurs recuperées avec this.$route.params dans l'url ;
     data(){
         return {
-            product:{},
+            product:{
+                name: '',
+                description: '',
+                price: 0,
+                stock: 0,
+                categories: [],
+                image:'',
+            },
             categories : [],
             selectedCategories : [],
+            // file : null,
         } 
     },
     //fonction pour recuperer l'id du produit et aprés l'assigner a la fonction suivante ;
@@ -78,42 +86,43 @@ export default {
         data.append('description', this.product.description)
         data.append('price', this.product.price)
         data.append('stock', this.product.stock)
-        data.append('image', this.product.image)
         data.append('categories',JSON.stringify(this.selectedCategories))
+        data.append('image', this.product.image)
 
         axios
-        .post(`http://127.0.0.1:8000/api/v1/products/${productId}?_method=PUT`, data  , {
+        .post(`http://127.0.0.1:8000/api/v1/products/${productId}?_method=PUT` , data, {
         headers:{
             'Authorization' : 'Bearer ' + localStorage.getItem('token'),
             'contentType':'multipart/form-data'
         }
-        })
+        } )
         .then((response) => console.log(response));
-        this.$router.push("/products");
-    },
-    getCategories(){
-        axios
-        .get(`http://127.0.0.1:8000/api/v1/categories`, {
-        headers:{
-            'Authorization' : 'Bearer ' + localStorage.getItem('token'),
-            "Content-Type": 'application/json',
-        }
-        })
-            .then((response)=>{
-                console.log(response);
-                this.categories = response.data ;
-            });
+            this.$router.push("/products");
+        },
+        fileImg(event){
+            this.product.image = event.target.files[0];
+        },
+        getCategories(){
+            axios
+            .get(`http://127.0.0.1:8000/api/v1/categories`, {
+            headers:{
+                'Authorization' : 'Bearer ' + localStorage.getItem('token'),
+                "Content-Type": 'application/json',
+            }
+            })
+                .then((response)=>{
+                    console.log(response);
+                    this.categories = response.data ;
+                });
         },
     },
     //pour inserer correctement les images ;
-    fileImg(event){
-        this.product.image = event.target.files[0];
-    },
-    getImageUrl(image){
-        if (image) {
-            return 'http://128.0.0.1:8000' + image ;
-        }
-    } 
+    // getImageUrl(image){
+    //     if (image) {
+    //         return 'http://127.0.0.1:8000/' + image ;
+    //     }
+    // },
+    
  }
    
 

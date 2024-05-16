@@ -12,13 +12,13 @@
         <!-- <div><input @keydown="getProductFromCategory" type="text" placeholder="search"></div> -->
     </div><br>
     <div class="listing-categories">
-        <div class="categorie" v-for="categorie in categories" :key="categorie.id">
-            <input type="checkbox" @change="getProductByCategorie">{{ categorie.name }}</input>
+        <div v-for="categorie in categories" :key="categorie.id">
+            <input v-model="selectedCategories" :value="categorie.name" type="checkbox" :id="categorie.id">{{ categorie.name }}</input>
         </div>
     </div>
     <div class="container"> 
         
-        <tbody class="listing-products" v-for="product in products" :key="product.id">
+        <tbody class="listing-products" v-for="product in filteredProducts" :key="product.id">
             <div class="product">
                 <img :src="getImageUrl(product.image)" alt="" /> 
                 <p>id_produit: {{ product.id }} </p>
@@ -26,7 +26,7 @@
                 <p>Description: {{ product.description }} </p>
                 <p>Price: {{ product.price }} euros </p>
                 <p>Stock: {{ product.stock }} produits restants </p>
-                Categorie:
+                <p>Categorie:</p>
                 <div v-for="categories in product.categorie">
                      {{ categories }}
                 </div>
@@ -48,27 +48,35 @@
 import axios from 'axios';
 
 export default {
-    // props: ["image_url"],
+    
     data(){
         return {
-            products:[
-
-            ],
-            categories:[
-
-            ],
+            products:[],
+            categories:[],
+            selectedCategories: [],
             authenticated : false,
         } 
     },
 
     mounted() {
-    this.getProducts() ;
-    this.getCategories();
-    // this.getImageUrl();
+        this.getCategories();
+        this.getProducts() ;
     },
 
+    computed: {
+    filteredProducts () {
+        console.log('ok');
+        if (this.selectedCategories.length === 0) {
+            return this.products ;
+        }else{
+            return this.products.filter(product => { 
+                return product.categorie.some(categorie => this.selectedCategories.includes(categorie)) ; 
+             });
+        }
+    },
+    },   
 methods :{
-
+    
     logout(){
         localStorage.removeItem('token');
         this.$router.push('/login');
@@ -141,11 +149,17 @@ methods :{
         });
     },
     // getProductByCategorie(){
-    //     console.log('ok');
-    //     axios.
-    //     get()
-    //     then((response)=>{
-    //         console.log("ok");
+    //     // console.log();
+       
+    //     axios
+    //     .get(`http://127.0.0.1:8000/api/v1/categories`, {params:_.omit(this.selected,'categories')},{
+    //         headers:{
+    //             'Authorization' : 'Bearer ' + localStorage.getItem('token'),
+    //             "Content-Type": 'application/json',
+    //         }
+    //     })
+    //     .then((response)=>{
+    //         console.log(response);
     //     })
     // },
   },
@@ -181,6 +195,10 @@ methods :{
     height: 450px;
     border-radius: 10px;
     padding: 5px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
 }
 .btns{
     display: flex;
