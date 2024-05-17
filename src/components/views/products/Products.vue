@@ -231,6 +231,6 @@ img{
     background-color: green;
 }
 .btn-edit{
-
+    background-color: rgb(0, 36, 128);
 }
 </style>

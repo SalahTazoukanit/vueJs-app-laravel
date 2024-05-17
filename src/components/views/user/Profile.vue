@@ -1,8 +1,8 @@
 <template>
 <header>
-    <router-link to="/products">Produits</router-link><br>
-    <router-link to="/categories">Categories</router-link><br>
-    <router-link to="/profile">Mon Profile</router-link><br>
+    <router-link style="text-decoration: none;" to="/products">Produits</router-link><br>
+    <router-link style="text-decoration: none;" to="/categories">Categories</router-link><br>
+    <router-link style="text-decoration: none;" to="/profile">Mon Profile</router-link><br>
 </header>
 <h1 style="text-align: center;">Mon profile</h1>
 <div class="container">
@@ -19,7 +19,7 @@
             <label for="password">New Password: </label>
             <input type="password" id="password" v-model="user.password" required>
         </div>
-        <div><button type="submit">Modifier</button></div>
+        <div><button class="btn-edit" type="submit">Modifier</button></div>
     </form>
 </div>
 </template>
@@ -113,8 +113,14 @@ button{
     display: flex;
     background-color: orange;
     border: none;
-    border-radius: 5px;
+    border-radius:5px;
+    padding: 5px;
     width: 150px;
     height: 25px;
+}
+.btn-edit{
+    color: white;
+    background-color: rgb(0, 36, 128);
+    text-align: center;
 }
 </style>

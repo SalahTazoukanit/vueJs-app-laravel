@@ -15,8 +15,8 @@
                 <p>{{ categorie.name }}</p>
                 <p>{{ categorie.description }}</p>
                 <div class="btns">
-                    <router-link style="text-decoration: none;" :to="{path: '/categories/update/'+ categorie.id}"><button>Modifier</button></router-link>
-                    <button @click="deleteCategorie(categorie.id)">Supprimer</button>
+                    <router-link style="text-decoration: none;" :to="{path: '/categories/update/'+ categorie.id}"><button class="btn-edit">Modifier</button></router-link>
+                    <button class="btn-delete" @click="deleteCategorie(categorie.id)">Supprimer</button>
                 </div>
             </div>
             
@@ -85,9 +85,8 @@ header{
 .categories{
     /* display: flex; */
     border-radius: 3px;
-    background-color: black;
-    color: white;
-    padding: 15px;
+    /* background-color: black; */
+    box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 2px, rgba(0, 0, 0, 0.07) 0px 2px 4px, rgba(0, 0, 0, 0.07) 0px 4px 8px, rgba(0, 0, 0, 0.07) 0px 8px 16px, rgba(0, 0, 0, 0.07) 0px 16px 32px, rgba(0, 0, 0, 0.07) 0px 32px 64px;    padding: 15px;
 }
 #store{
     width: 200px;
@@ -99,8 +98,14 @@ header{
 button{
     border: none;
     color:white;
-    background-color: rgb(219, 153, 22);
+    background-color: orange;
     border-radius: 5px;
     padding: 10px;
+}
+.btn-delete{
+    background-color: red;
+}
+.btn-edit{
+    background-color: rgb(0, 36, 128);
 }
 </style>
