@@ -1,4 +1,8 @@
 <template>
+    <header>
+        <router-link style="text-decoration: none;" to="/">Welcome</router-link>
+        <router-link style="text-decoration: none;" to="/Register">Register</router-link>
+    </header>
     <h1 style="text-align: center;">Login</h1>
     <form @submit.prevent="login">
         <div>
@@ -59,6 +63,10 @@ export default {
 </script>
 
 <style scoped>
+header{
+    display: flex;
+    justify-content: space-evenly;
+}
 html,body{
     margin:0;padding:0
 }

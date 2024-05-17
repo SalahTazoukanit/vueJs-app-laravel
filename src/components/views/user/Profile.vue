@@ -19,10 +19,6 @@
             <label for="password">New Password: </label>
             <input type="password" id="password" v-model="user.password" required>
         </div>
-        <!-- <div>
-            <label for="passwordConfirmation">Password Confirmation: </label>
-            <input type="password" id="passwordConfirmation" v-model="user.passwordConfirmation" required>
-        </div> -->
         <div><button type="submit">Modifier</button></div>
     </form>
 </div>
@@ -91,6 +87,10 @@ export default{
 </script>
 
 <style scoped>
+header{
+    display: flex;
+    justify-content: space-evenly;
+}
 .container{
     display: flex;
     flex-wrap: wrap;

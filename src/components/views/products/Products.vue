@@ -1,11 +1,11 @@
 <template> 
     <header>
-        <router-link to="/products">Produits</router-link><br>
-        <router-link to="/categories">Categories</router-link><br>
-        <router-link to="/profile">Mon Profile</router-link><br>
+        <router-link style=" text-decoration: none;" to="/products">Produits</router-link><br>
+        <router-link style=" text-decoration: none;" to="/categories">Categories</router-link><br>
+        <router-link style=" text-decoration: none;" to="/profile">Mon Profile</router-link><br>
+        <div><button style="float: right;" @click="logout">Logout</button></div>
     </header>
-    <div><button style="float: right;" @click="logout">Logout</button></div>
-    <h1>Listing Produits</h1>
+    <h1 style="text-align: center;">Listing Produits</h1>
     <div class="first-head">
         <div><router-link to="products/store"><button class="btn">store</button></router-link></div>
         <div></div>
@@ -26,16 +26,16 @@
                 <p>Description: {{ product.description }} </p>
                 <p>Price: {{ product.price }} euros </p>
                 <p>Stock: {{ product.stock }} produits restants </p>
-                <p>Categorie:</p>
+                <p>Categorie(s):</p>
                 <div v-for="categories in product.categorie">
                      {{ categories }}
                 </div>
                  
             </div> 
             <div class="btns">
-                <button @click="deleteProduct(product.id)">Supprimer</button>
-                <router-link style="text-decoration: none;" :to="{path: '/products/update/'+ product.id}"><button>Modifier</button></router-link>
-                <router-link style="text-decoration: none;" :to="{name:'ShowProduct' , params: { id : product.id }}"><button>Afficher produit</button></router-link>
+                <button class="btn-delete" @click="deleteProduct(product.id)">Supprimer</button>
+                <router-link style="text-decoration: none;" :to="{path: '/products/update/'+ product.id}"><button class="btn-edit">Modifier</button></router-link>
+                <router-link style="text-decoration: none;" :to="{name:'ShowProduct' , params: { id : product.id }}"><button class="btn-show">Afficher produit</button></router-link>
                 <!-- <router-link :to="{ path:'/products/'+ product.id }"><button>Visualiser</button></router-link> -->
             </div>
         </tbody>
@@ -148,25 +148,15 @@ methods :{
             this.categories = response.data ;
         });
     },
-    // getProductByCategorie(){
-    //     // console.log();
-       
-    //     axios
-    //     .get(`http://127.0.0.1:8000/api/v1/categories`, {params:_.omit(this.selected,'categories')},{
-    //         headers:{
-    //             'Authorization' : 'Bearer ' + localStorage.getItem('token'),
-    //             "Content-Type": 'application/json',
-    //         }
-    //     })
-    //     .then((response)=>{
-    //         console.log(response);
-    //     })
-    // },
   },
 }
 </script>
 
 <style scoped>
+header{
+    display: flex;
+    justify-content: space-evenly;
+}
 .container{
     display: flex;
     flex-direction: row;
@@ -189,7 +179,7 @@ methods :{
     overflow: hidden;
 }
 .product{
-    border: solid;
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
     text-align: center;
     width: 320px;
     height: 450px;
@@ -219,6 +209,7 @@ methods :{
 button{
     border: none;
     color:white;
+    padding: 5px;
     background-color: rgb(219, 153, 22);
     border-radius: 5px;
 }
@@ -233,7 +224,13 @@ img{
     -webkit-box-orient: vertical;
     overflow: hidden;
 }
-.categorie{
+.btn-delete{
+    background-color: red;
+}
+.btn-show{
+    background-color: green;
+}
+.btn-edit{
 
 }
 </style>

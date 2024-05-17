@@ -1,8 +1,8 @@
 <template>
-    <nav style="display: flex;">
-        <router-link to="/register">Register</router-link>
-        <router-link to="/login">Login</router-link>
-    </nav>
+    <header>
+        <router-link style="text-decoration: none;" to="/register">Register</router-link>
+        <router-link style="text-decoration: none;" to="/login">Login</router-link>
+    </header>
     <div>
     <h1>{{ msg }}</h1>
     
@@ -40,6 +40,10 @@ export default {
 </script>
 
 <style scoped>
+header{
+    display: flex;
+    justify-content: space-evenly;
+}
 h1{
     font-family: 'Courier New', Courier, monospace;
     text-align: center;

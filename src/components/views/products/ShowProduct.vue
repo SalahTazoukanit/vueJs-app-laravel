@@ -1,13 +1,16 @@
 <template>
     <div>
-        <h1 style="text-align: center;">Le produit</h1>
+        <!-- <h1 style="text-align: center;">Le produit</h1> -->
         <div class="container">
-            <p v-if="product.id">{{ product.id }}</p>
-            <p v-if="product.name">{{ product.name }}</p>
-            <p v-if="product.description">{{ product.description }}</p>
-            <p v-if="product.price">{{ product.price }}</p>
-            <p v-if="product.stock">{{ product.stock }}</p>
-            <img v-if="product.image" :src="getImageUrl(product.image)"></img>
+            <p v-if="product.name"><h1>{{ product.name }}</h1></p>
+            <div>
+                <img v-if="product.image" :src="getImageUrl(product.image)"></img>
+            </div>
+            <div>
+                <p v-if="product.description">{{ product.description }}</p>
+                <p v-if="product.price">Prix: {{ product.price }} euros</p>
+                <p v-if="product.stock">Pieces restants: {{ product.stock }}</p>
+            </div>
         </div>
     </div>
 </template>
@@ -58,11 +61,19 @@ export default {
 </script>
 
 <style scoped>
+header{
+    display: flex;
+    justify-content: space-evenly;
+}
 .container{
     display: flex;
     flex-direction: column;
     margin-left: 15px;
     margin-right: 15px;
    text-align: center;
+}
+.container img{
+    width: 40%;
+    max-height: 30%;
 }
 </style>

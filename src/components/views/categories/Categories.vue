@@ -1,12 +1,14 @@
 <template>
     <header>
-        <router-link to="/products">Produits</router-link><br>
-        <router-link to="/categories">Categories</router-link><br>
-        <router-link to="/profile">Mon Profile</router-link><br>
-    </header>
-    <div style="display: flex; justify-content: center;"><router-link to="categories/store"><button id="store">Créer categorie</button></router-link></div>
+        <router-link style=" text-decoration: none;" to="/products">Produits</router-link><br>
+        <router-link style=" text-decoration: none;" to="/categories">Categories</router-link><br>
+        <router-link style=" text-decoration: none;" to="/profile">Mon Profile</router-link><br>
+    </header><br>
     <div>
-        <h1>Listing Categories</h1>
+        <div>
+            <h1 style="text-align: center;">Listing Categories</h1>
+            <div style="display: flex; justify-content: center;"><router-link to="categories/store"><button id="store">Créer categorie</button></router-link></div>
+        </div><br>
         <div class="listing-categories">
         <div class="categories" v-for="categorie in categories" :key="categorie.id">
             <div class="categorie">
@@ -70,6 +72,10 @@ export default {
 </script>
 
 <style scoped>
+header{
+    display: flex;
+    justify-content: space-evenly;
+}
 .listing-categories{
     display: flex;
     flex-direction: column;
