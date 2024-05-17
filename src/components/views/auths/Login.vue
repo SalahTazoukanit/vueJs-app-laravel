@@ -56,7 +56,7 @@ export default {
                 localStorage.setItem('token', token);
                 localStorage.setItem('userId', id);
                 this.$router.push('/products' );
-            }).catch(error => console.log(error)); 
+            }).catch(error => {alert(error)}); 
         }
     }
 }
